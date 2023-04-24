@@ -5,7 +5,7 @@
       <div class="title-container">
         <h3 class="title">
           <!-- {{ $t('login.title') }} -->
-           {{ $t('狗狗后台登录') }}
+          {{ $t('狗狗后台登录') }}
         </h3>
         <!-- <lang-select class="set-language" /> -->
       </div>
@@ -17,7 +17,7 @@
         <!-- :placeholder="$t('login.username')" -->
         <el-input
           ref="username"
-          v-model="loginForm.accountNumber"          
+          v-model="loginForm.accountNumber"
           placeholder="账号"
           name="username"
           type="text"
@@ -60,17 +60,17 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import LangSelect from '@/components/LangSelect'
-import SocialSign from './components/SocialSignin'
-import {login} from "@/api/user";
+// import { validUsername } from '@/utils/validate'
+// import LangSelect from '@/components/LangSelect'
+// import SocialSign from './components/SocialSignin'
+// import { login } from '@/api/user'
 export default {
   name: 'Login',
-  components: { LangSelect, SocialSign },
+  // components: { LangSelect, SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (value=="") {
-         callback(new Error('请输入正确的用户名'))
+      if (!value) {
+        callback(new Error('请输入正确的用户名'))
         // callback(new Error('Please enter the correct user name'))
       } else {
         callback()
@@ -86,8 +86,8 @@ export default {
     }
     return {
       loginForm: {
-        accountNumber: 'dog-coming',
-        password: 'dogComing0415'
+        accountNumber: 'admin',
+        password: '123456'
       },
       loginRules: {
         accountNumber: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -138,7 +138,7 @@ export default {
       })
     },
     // 登录
-   async handleLogin() {
+    async handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -149,15 +149,15 @@ export default {
             })
             .catch(() => {
               this.loading = false
-              this.$message.error('登陆失败\n账号/密码错误');
+              this.$message.error('登陆失败\n账号/密码错误')
             })
         } else {
-           this.$message.error('登陆失败\n账号/密码为空');
+          this.$message.error('登陆失败\n账号/密码为空')
           return false
         }
       })
     },
-    //查询其他页面
+    // 查询其他页面
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== 'redirect') {
