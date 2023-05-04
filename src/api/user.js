@@ -13,9 +13,7 @@ export function logout() {
     method: 'post'
   })
 }
-//var url1='https://41216.pamperdog.club/admin-api';
-//var url1='https://g5y8627140.goho.co/admin-api'
-var url1='http://192.168.0.103:41216/admin-api'
+
 //登录
 export function login(data) {
   return request({
@@ -155,26 +153,9 @@ export function propUpdate(id,data) {
   })
 }
 
-//获取战斗装备信息 GET /admin-api/produce/all
-export function produceAll(data) {
-  return request({
-    url:'produce/all',
-    method: 'get',
-    baseURL:url1,
-    params:data
-  })
-}
-//修改战斗装备信息
-export function produceUpdate(id,data) {
-  return request({
-    url:'produce/update/'+id,
-    method: 'put',
-    baseURL:url1,
-    data
-  })
-}
 
-//获取战斗装备信息 setting/all
+
+//获取平台配置
 export function settingAll() {
   return request({
     url:'setting/all',
@@ -182,7 +163,15 @@ export function settingAll() {
     baseURL:url1,
   })
 }
-//修改战斗装备信息
+//获取平台配置
+export function settingInfo(key) {
+  return request({
+    url:'setting/info/'+key,
+    method: 'get',
+    baseURL:url1,
+  })
+}
+//平台配置修改
 export function settingUpdate(data) {
   return request({
     url:'setting/update',
@@ -192,7 +181,7 @@ export function settingUpdate(data) {
   })
 }
 
-//获取战斗装备信息 map/all
+//获取地图
 export function mapAll() {
   return request({
     url:'map/all',
@@ -200,7 +189,7 @@ export function mapAll() {
     baseURL:url1,
   })
 }
-//修改战斗装备信息
+//修改地图属性
 export function mapUpdate(id,data) {
   return request({
     url:'map/update/'+id,
@@ -209,3 +198,111 @@ export function mapUpdate(id,data) {
     data
   })
 }
+
+//地图概率
+export function produceAll(data) {
+  return request({
+    url:'produce/all',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//地图概率修改
+export function produceUpdate(id,data) {
+  return request({
+    url:'produce/update/'+id,
+    method: 'put',
+    baseURL:url1,
+    data
+  })
+}
+//记录相关控制层————————————————————————————————————————————————
+//用户ASG记录
+export function logAsg(data) {
+  return request({
+    url:'log/asg',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//用户押注记录
+export function logAward(data) {
+  return request({
+    url:'log/award',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//用户支付记录
+export function logPay(data) {
+  return request({
+    url:'log/pay',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//用户返佣记录
+export function logRake(data) {
+  return request({
+    url:'log/rake',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//用户赞助记录
+export function logSupport(data) {
+  return request({
+    url:'log/support',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//广告——————————————————————————————————————————————————————————————————
+//广告列表
+export function adAll(data) {
+  return request({
+    url:'ad/all',
+    method: 'get',
+    baseURL:url1,
+    params:data
+  })
+}
+//广告列表修改
+export function adUpdate(id,data) {
+  return request({
+    url:'ad/update/'+id,
+    method: 'put',
+    baseURL:url1,
+    data
+  })
+}
+//广告列表新增
+export function adAdd(data) {
+  return request({
+    url:'ad/update',
+    method: 'post',
+    baseURL:url1,
+    data
+  })
+}
+//广告列表删除
+export function adDelete(id) {
+  return request({
+    url:'ad/delete/'+id,
+    method: 'delete',
+    baseURL:url1,
+    data
+  })
+}
+//测试日本服务器
+var url1='https://41216.pamperdog.club/admin-api';
+//不同地方的本地服务器
+//var url1='https://g5y8627140.goho.co/admin-api'
+//本地服务器
+//var url1='http://192.168.0.106:41216/admin-api'

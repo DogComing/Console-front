@@ -3,7 +3,7 @@
     <div  style="display:flex; flex-direction:row; justify-content:start ;width: 100%;">
       <div style="width: 40%; ">
         <div  style=" " v-for="(value,index) in  info1" :key="index" >
-          <el-card class="box-card" >
+          <el-card class="box-card" v-if="info1[index].key != 'jackpot' && info1[index].key != 'share_out_bonus'">
             <div slot="header" class="clearfix">
               <span>{{info1[index].remark}}</span>
               <el-button style="float: right; padding: 3px 0" type="text" @click="OpenPinZhi(index,0)">设置</el-button>
@@ -12,13 +12,13 @@
                 {{info1[index].value}}
             </div>
           </el-card>
-          <div style="height: 50px;"></div>
+          <div style="height: 50px;" v-if="info1[index].key != 'jackpot' && info1[index].key != 'share_out_bonus'"></div>
         </div>
       </div>
       <div style="width: 50px;"></div>
       <div style="width: 40%;  ">
         <div  style=" width: 100%" v-for="(value,index) in  info2" :key="index" >
-          <el-card class="box-card"  >
+          <el-card class="box-card" v-if="info1[index].key != 'jackpot' && info1[index].key != 'share_out_bonus'" >
           <div slot="header" class="clearfix">
             <span>{{info2[index].remark}}</span>
             <el-button style="float: right; padding: 3px 0" type="text" @click="OpenPinZhi(index,1)" >设置</el-button>
@@ -27,7 +27,7 @@
             {{info2[index].value}}
           </div>
           </el-card>
-          <div style="height: 50px;"></div>
+          <div style="height: 50px;" v-if="info1[index].key != 'jackpot' && info1[index].key != 'share_out_bonus'"></div>
         </div>
       </div>
 
@@ -112,6 +112,10 @@
         console.log(data);
         await settingUpdate(data)
         this.GetUseInfo();
+             this.$message({
+                message: '修改成功',
+                type: 'success'
+            });
 
       },
       // 修改配置

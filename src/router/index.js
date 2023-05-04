@@ -13,6 +13,8 @@ import Layout from '@/layout'
 // import nestedRouter from './modules/nested'
 import peiZhiRouter from './modules/peizhi'
 import itemsRouter from './modules/items'
+import jiLuRouter from './modules/jilu'
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -71,7 +73,7 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  // 首页
+  // 指示板
   {
     path: '/',
     component: Layout,
@@ -79,12 +81,12 @@ export const constantRoutes = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/viewss/UserInfo/index'),
+        component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '用户信息', icon: 'el-icon-user-solid', affix: true }
+        meta: { title: '指示板', icon: 'dashboard', affix: true }
       }
     ]
-  }
+  },
 ]
 
 /**
@@ -92,8 +94,23 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  // 首页
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user',
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/viewss/UserInfo/index'),
+        name: 'user',
+        meta: { title: '用户信息', icon: 'el-icon-user-solid', noCache: true }
+      }
+    ]
+  },
   peiZhiRouter,
   itemsRouter,
+  jiLuRouter,
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -136,18 +153,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/icon',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/icons/index'),
-  //       name: 'Icons',
-  //       meta: { title: 'icons', icon: 'icon', noCache: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/icons/index'),
+        name: 'Icons',
+        meta: { title: 'icons', icon: 'icon', noCache: true }
+      }
+    ]
+  },
 
   // /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,

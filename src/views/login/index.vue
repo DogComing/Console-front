@@ -87,7 +87,8 @@ export default {
     return {
       loginForm: {
         accountNumber: 'dog-coming',
-        password: 'dogComing0415'
+        password: ''
+        //dogComing0415
       },
       loginRules: {
         accountNumber: [{ required: true, trigger: 'blur', validator: validateUsername }],
