@@ -47,29 +47,30 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo('admin-token').then(response => {
-        const { data } = response
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
+    // return new Promise((resolve, reject) => {
+    //   // getInfo('admin-token').then(response => {
+    //   //   const { data } = response
+    //   //   if (!data) {
+    //   //     reject('Verification failed, please Login again.')
+    //   //   }
 
-        // const { roles, name, avatar, introduction } = data
+    //   //   // const { roles, name, avatar, introduction } = data
 
-        // roles must be a non-empty array
-        // if (!roles || roles.length <= 0) {
-        //   reject('getInfo: roles must be a non-null array!')
-        // }
+    //   //   // roles must be a non-empty array
+    //   //   // if (!roles || roles.length <= 0) {
+    //   //   //   reject('getInfo: roles must be a non-null array!')
+    //   //   // }
 
-        commit('SET_ROLES',  ['roles1', 'roles2'])
-        // commit('SET_NAME', name)
-        // commit('SET_AVATAR', avatar)
-        // commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
+    //   //   commit('SET_ROLES',  ['roles1', 'roles2'])
+    //   //   // commit('SET_NAME', name)
+    //   //   // commit('SET_AVATAR', avatar)
+    //   //   // commit('SET_INTRODUCTION', introduction)
+    //   //   resolve(data)
+    //   // }).catch(error => {
+    //   //   reject(error)
+    //   // })
+    // })
+    commit('SET_ROLES',  ['roles1', 'roles2'])
   },
 
   // user logout

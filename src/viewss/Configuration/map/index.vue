@@ -3,7 +3,7 @@
         <el-table :data="mapData" border style="width: 100%">
             <el-table-column type="index" label="" width="50"></el-table-column>
             <!-- 名字 -->
-            <el-table-column  label="名字" width="250">
+            <el-table-column  label="名字" align="center">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.name.isSet" style="margin-top: 5px;">{{ scope.row.name.value }}</div>
@@ -23,7 +23,7 @@
                 </template>
             </el-table-column>
             <!-- 等级 -->
-            <el-table-column  label="解锁等级" width="250">
+            <el-table-column  label="解锁等级" align="center">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.lockLevel.isSet" style="margin-top: 5px;">{{ scope.row.lockLevel.value }}</div>
@@ -43,35 +43,14 @@
                 </template>
             </el-table-column>
             <!-- 消耗AGS -->
-            <el-table-column  label="消耗AGS" width="250">
-                <template slot-scope="scope" >
-                    <div style="display:flex; flex-direction:row; justify-content:space-between;">
-                        <div v-if="!scope.row.JL.isSet" style="margin-top: 5px;">{{ scope.row.JL.value }}</div>
-                        <div v-if="scope.row.JL.isSet" style="width: 80px;">
-                            <el-input                                
-                                size="mini"
-                                placeholder="消耗AGS"
-                                v-model="scope.row.JL.setValue">
-                            </el-input>
-                        </div>
-                        <div style="height: 10px;"></div>
-                        <el-button  v-if="!scope.row.JL.isSet" type="primary" size="small" icon="el-icon-edit" @click="scope.row.JL.isSet=!scope.row.JL.isSet">修改</el-button>
-                        <div v-if="scope.row.JL.isSet" >
-                            <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="SetPinZhi(scope.$index, scope.row)">确认</el-button>
-                            <el-button  type="info" size="small" icon="el-icon-circle-check-outline" @click="scope.row.JL.isSet=!scope.row.JL.isSet">取消</el-button>
-                        </div>
-                    </div>
-                </template>
-            </el-table-column>
-            <!-- 消耗精力 -->
-            <el-table-column  label="消耗精力" width="250">
+            <el-table-column  label="消耗AGS" align="center">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.useAgs.isSet" style="margin-top: 5px;">{{ scope.row.useAgs.value }}</div>
                         <div v-if="scope.row.useAgs.isSet" style="width: 80px;">
                             <el-input                                
                                 size="mini"
-                                placeholder="消耗精力"
+                                placeholder="消耗AGS"
                                 v-model="scope.row.useAgs.setValue">
                             </el-input>
                         </div>
@@ -84,12 +63,33 @@
                     </div>
                 </template>
             </el-table-column>
-             <!-- 捕捉概率 -->
-            <el-table-column  label="捕捉概率" width="250">
+            <!-- 消耗精力 -->
+            <el-table-column  label="消耗精力" align="center">
+                <template slot-scope="scope" >
+                    <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div v-if="!scope.row.JL.isSet" style="margin-top: 5px;">{{ scope.row.JL.value }}</div>
+                        <div v-if="scope.row.JL.isSet" style="width: 80px;">
+                            <el-input                                
+                                size="mini"
+                                placeholder="消耗精力"
+                                v-model="scope.row.JL.setValue">
+                            </el-input>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <el-button  v-if="!scope.row.JL.isSet" type="primary" size="small" icon="el-icon-edit" @click="scope.row.JL.isSet=!scope.row.JL.isSet">修改</el-button>
+                        <div v-if="scope.row.JL.isSet" >
+                            <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="SetPinZhi(scope.$index, scope.row)">确认</el-button>
+                            <el-button  type="info" size="small" icon="el-icon-circle-check-outline" @click="scope.row.JL.isSet=!scope.row.JL.isSet">取消</el-button>
+                        </div>
+                    </div>
+                </template>
+            </el-table-column>
+            <!-- 捕捉概率 -->
+            <!-- <el-table-column  label="捕捉概率" width="250">
                 <template slot-scope="scope" >
                      <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="DialogVisible(scope.$index, scope.row)">设置</el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
 
         <el-dialog :title="titleName" :visible.sync="dialogVisible" width="30%">
@@ -195,6 +195,10 @@
         async SetDogInfo(id, _paget) {
             await mapUpdate(id,_paget)
             this.GetUseInfo();
+                 this.$message({
+                message: '修改成功',
+                type: 'success'
+            });
         },
         // 修改配置
         SetPinZhi(index, row) {

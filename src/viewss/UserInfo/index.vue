@@ -1,17 +1,38 @@
 <template>
     <div class="bar">
-        <div style="width: 200px;height: 50px;">
-        <el-input placeholder="搜索用户名字" prefix-icon="el-icon-search" v-model="sousuo" @input= 'SouSuo'></el-input>
+        <div style="width: 500px;height: 70px;display:flex; flex-direction:row; ">
+            <div><el-input placeholder="搜索钱包地址" prefix-icon="el-icon-search" v-model="sousuo1" @input='SouSuo' clearable></el-input></div>
+            <div style="width: 20px;" ></div>
+            <div><el-input placeholder="搜索名字" prefix-icon="el-icon-search" v-model="sousuo2" @input='SouSuo' clearable></el-input></div>
         </div>
         <!-- 列表 -->
         <el-table :data="userData" border style="width: 100%">
-            <el-table-column type="index" label="" ></el-table-column>
+            <el-table-column type="index" label="" align="center" fixed></el-table-column>
             <!-- id -->
-            <el-table-column prop="id" label="ID"></el-table-column>
+            <el-table-column prop="id" label="ID" align="center" width="100px"></el-table-column>
             <!-- 名字 -->
-            <el-table-column prop="name" label="名字" ></el-table-column>
+            <el-table-column prop="name" label="名字" align="center" width="100px" fixed></el-table-column>
+            <!-- 钱包地址 -->
+            <el-table-column  label="钱包地址" align="center"  width="400px" fixed>
+                <template slot-scope="scope" >
+                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div style="margin-top: 5px;overflow: hidden;-webkit-line-clamp: 1;-webkit-box-orient: vertical;display: -webkit-box;">{{ scope.row.address }}</div>
+                        <el-button type="text" size="small" icon="el-icon-document-copy" @click="copyBtn(scope.row.address)">复制</el-button>
+                     </div>
+                </template>
+            </el-table-column>
+             <!-- 开启地图数量 -->
+            <el-table-column prop="openMapNum" label="开启地图数量" align="center" width="130px"></el-table-column>
+             <!-- 签到天数 -->
+            <el-table-column prop="signInDayNum" label="签到天数" align="center" width="100px"></el-table-column>
+            <!-- 宠物数量 -->
+            <el-table-column prop="dogNum" label="宠物数量" align="center" width="100px"></el-table-column>
+            <!-- 珍宝数量 -->
+            <el-table-column prop="gemNum" label="珍宝数量" align="center" width="100px"></el-table-column>
+            <!-- 胜利场次 -->
+            <el-table-column prop="winNum" label="胜利场次" align="center" width="100px"></el-table-column>
             <!-- AGS -->
-            <el-table-column prop="ags" label="AGS" >
+            <el-table-column prop="ags" label="AGS" align="center" width="290px">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.ags.isSet" style="margin-top: 5px;">{{ scope.row.ags.value }}</div>
@@ -32,7 +53,7 @@
                 </template>
             </el-table-column>
             <!-- 精力 -->
-            <el-table-column prop="ags" label="精力" >
+            <el-table-column prop="ags" label="精力" align="center" width="290px">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.JL.isSet" style="margin-top: 5px;">{{ scope.row.JL.value }}</div>
@@ -52,6 +73,31 @@
                     </div>
                 </template>
             </el-table-column>
+            <!-- ASG记录  fixed="right" -->
+            <el-table-column  label="ASG记录" align="center" width="130px">
+                <template slot-scope="scope" >
+                     <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="TiaoZhuan('/jilu/asg',{address:scope.row.address})">ASG记录</el-button>
+                </template>
+            </el-table-column>
+            <!-- 消费记录 -->
+            <el-table-column  label="消费记录" align="center" width="130px">
+                <template slot-scope="scope" >
+                     <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="TiaoZhuan('/jilu/pay',{address:scope.row.address})">消费记录</el-button>
+                </template>
+            </el-table-column>
+             <!-- 赞助记录 -->
+            <el-table-column  label="比赛记录" align="center" width="130px">
+                <template slot-scope="scope" >
+                     <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="TiaoZhuan('/jilu/support',{address:scope.row.address})">比赛记录</el-button>
+                </template>
+            </el-table-column>
+            <!-- 赞助结果记录 -->
+            <el-table-column  label="赞助结果记录" align="center" width="130px" >
+                <template slot-scope="scope" >
+                     <el-button  type="success" size="small" icon="el-icon-circle-check-outline" @click="TiaoZhuan('/jilu/sponsorship',{address:scope.row.address})">赞助结果记录</el-button>
+                </template>
+            </el-table-column>
+
         </el-table>
         <!-- 分页 -->
         <div style="height: 50px;"></div>
@@ -99,14 +145,16 @@
                     //第几页
                     curPage:1,
                     //每页最大数量
-                    maxNum:12,
+                    maxNum:11,
                     //最大数量
                     maxCount:0,
                 },
-                sousuo:'',
+                sousuo1:'',
+                sousuo2:'',
             }
         },
     mounted() {
+        
         this.getUerInfo()
     },
     methods: {
@@ -117,16 +165,14 @@
                 page :this.pageData.curPage,
                 size :this.pageData.maxNum,
             }
-            if(this.sousuo !="")
+            if(this.sousuo1 !="")
             {
-                _paget=
-                {
-                    userName:this.sousuo,
-                    page :this.pageData.curPage,
-                    size :this.pageData.maxNum,
-                }
+                _paget['address'] = this.sousuo1;
             }
-         
+            if(this.sousuo2 !="")
+            {
+                 _paget['userName'] = this.sousuo2;
+            }
             const data = await userAll(_paget)
             //修改页
             this.pageData.maxCount = data.data.count;
@@ -137,6 +183,12 @@
                 let value ={
                     id:data.data.data[i].userId,
                     name:data.data.data[i].userName,
+                    openMapNum:data.data.data[i].openMapNum,
+                    signInDayNum:data.data.data[i].signInDayNum,
+                    dogNum:data.data.data[i].dogNum,
+                    gemNum:data.data.data[i].gemNum,
+                    winNum:data.data.data[i].winNum,
+                    address:data.data.data[i].address,
                     //AGS
                     ags:{
                             value: data.data.data[i].dogCoin, 
@@ -162,6 +214,10 @@
             const data = await userUpdate(id,_paget)
             console.log(data);
             this.getUerInfo();
+                 this.$message({
+                message: '修改成功',
+                type: 'success'
+            });
         },
         // 修改AGS
         SetAGS(index, row) {
@@ -191,14 +247,35 @@
                 this.$message.error('修改失败\n体力为空');
             } 
         },
-        //跳转页
+        //翻页
         HandleCurrentChange(val) {
              this.getUerInfo()
+                  this.$message({
+                message: '翻页成功',
+                type: 'success'
+            });
         },
         //搜索
         SouSuo()
         {
             this.getUerInfo()
+        }, 
+        copyBtn(address)
+        {
+            var oInput = document.createElement('input'); //创建一个隐藏input（重要！）
+            oInput.value =address;    //赋值
+            document.body.appendChild(oInput);
+            oInput.select(); // 选择对象
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            oInput.className = 'oInput';
+            oInput.style.display = 'none';
+            this.$message.success('复制成功');
+        },
+        //跳转
+        TiaoZhuan(_name,_data)
+        {
+            // this.$router.push({ name: _name, params: _data });
+             this.$router.push({ path: _name, query: _data });
         }
     }
 }
@@ -211,7 +288,6 @@
 }
 .pagination
 {
-   
     display:flex;
     justify-content: center;
 }

@@ -8,9 +8,9 @@
         <div style="height: 20px;"></div>
         <!-- 列表 -->
         <el-table :data="userData" border style="width: 100%">
-            <el-table-column type="index" label="天"></el-table-column>
+            <el-table-column type="index" label="天" align="center"></el-table-column>
             <!-- 物品ID -->
-            <el-table-column prop="ags" label="物品ID"  >
+            <el-table-column prop="ags" label="物品ID"  align="center">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.itemsId.isSet" style="margin-top: 5px;">{{ scope.row.itemsId.value }}</div>
@@ -26,7 +26,7 @@
                 </template>
             </el-table-column>
             <!-- 数量 -->
-            <el-table-column prop="ags" label="数量" >
+            <el-table-column prop="ags" label="数量" align="center">
                 <template slot-scope="scope" >
                     <div style="display:flex; flex-direction:row; justify-content:space-between;">
                         <div v-if="!scope.row.itemsNum.isSet" style="margin-top: 5px;">{{ scope.row.itemsNum.value }}</div>

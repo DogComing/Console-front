@@ -2,17 +2,17 @@
     <div class="bar">
         <!-- 列表 -->
         <el-table :data="dogData" border style="width: 100%">
-            <el-table-column type="index" label="" width="50"></el-table-column>
+            <el-table-column type="index" label="" width="50" align="center"></el-table-column>
              <!-- id -->
-            <el-table-column prop="id" label="ID" width="40"></el-table-column>
+            <el-table-column prop="id" label="ID" width="40" align="center"></el-table-column>
             <!-- 图片 -->
-            <el-table-column prop="ags" label="图片"  width="130">
+            <el-table-column prop="ags" label="图片"  width="130" align="center">
                 <template slot-scope="scope" >
                      <el-image style="width: 100px; height: 100px" :src="url+scope.row.imag+'.png'"  ></el-image>
                 </template>
             </el-table-column>
             <!-- 品质 -->
-            <el-table-column prop="ags" label="品质">
+            <el-table-column prop="ags" label="品质" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.quality.isSet" style="margin-top: 5px;">{{ scope.row.quality.value }}</div>
                     <div v-if="scope.row.quality.isSet" >
@@ -25,7 +25,7 @@
                 </template>
             </el-table-column>
             <!-- 名称 -->
-            <el-table-column prop="ags" label="名称">
+            <el-table-column prop="ags" label="名称" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.name.isSet" style="margin-top: 5px;">{{ scope.row.name.value }}</div>
                     <div v-if="scope.row.name.isSet"   >
@@ -38,7 +38,7 @@
                 </template>
             </el-table-column>
              <!-- 品种 -->
-            <el-table-column prop="ags" label="品种">
+            <el-table-column prop="ags" label="品种" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.varieties.isSet" style="margin-top: 5px;">{{ scope.row.varieties.value }}</div>
                     <div v-if="scope.row.varieties.isSet"  >
@@ -55,7 +55,7 @@
                 </template>
             </el-table-column>
             <!-- 初始战力 -->
-            <el-table-column prop="ags" label="初始战力">
+            <el-table-column prop="ags" label="初始战力" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.power.isSet" style="margin-top: 5px;">{{ scope.row.power.value }}</div>
                     <div v-if="scope.row.power.isSet"  >
@@ -72,7 +72,7 @@
                 </template>
             </el-table-column>
              <!-- 成长次数 -->
-            <el-table-column prop="ags" label="成长次数">
+            <el-table-column prop="ags" label="成长次数" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.growth.isSet" style="margin-top: 5px;">{{ scope.row.growth.value }}</div>
                     <div v-if="scope.row.growth.isSet"  >
@@ -89,7 +89,7 @@
                 </template>
             </el-table-column>
              <!-- 天赋 -->
-            <el-table-column prop="ags" label="天赋">
+            <el-table-column prop="ags" label="天赋" align="center">
                 <template slot-scope="scope" >
                     <div v-if="!scope.row.talent.isSet" style="margin-top: 5px;">{{ scope.row.talent.value }}</div>
                     <div v-if="scope.row.talent.isSet"  >
@@ -214,6 +214,10 @@
         async SetDogInfo(id, _paget) {
             await dogUpdate(id,_paget)
             this.GetDogInfo();
+                 this.$message({
+                message: '修改成功',
+                type: 'success'
+            });
         },
         // 修改配置
         SetPinZhi(index, row) {
@@ -238,6 +242,10 @@
         //跳转页
         HandleCurrentChange(val) {
           this.GetDogInfo()
+               this.$message({
+                message: '换页成功',
+                type: 'success'
+            });
         }
     }
 
